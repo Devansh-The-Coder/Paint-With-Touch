@@ -1,0 +1,128 @@
+<html>
+<style>
+    .body_background {
+        background-image: url("https://previews.123rf.com/images/cotopaxi/cotopaxi1801/cotopaxi180100014/92916199-abstract-art-background-digital-painting-color-texture-modern-art-contemporary-art-colorful-canvas-.jpg");
+        background-position: center;
+        background-size: cover;
+
+    }
+
+    #canvas_id {
+        background-color: white;
+        border-width: 10px;
+    }
+</style>
+
+
+<head>
+    <title>
+        Canvas
+    </title>
+
+</head>
+
+<body class="body_background">
+    <center>
+        <h1 style="color: blue">
+            My First Canvas
+        </h1>
+        <canvas id="canvas_id" alt="canvas" width="800" height="600"></canvas>
+        <br>
+        <span>
+            Color-
+        </span>
+        <input type="text" placeholder="Type here" id="input_1" alt="Text Input">
+        <br>
+       <span> <button id="btn_1" value="Clear Area" onclick="ClearArea()" alt="Clear Area">Clear Area</button>
+        </span>
+        <span>
+            Width-
+        </span>
+        <input type="text" placeholder="Type Width Here" id="input_width" alt="Text Input">
+    </center>
+
+    <script>
+        var MouseEvent="empty"
+        var Last_Position_Of_X,Last_Position_Of_Y
+        canvas=document.getElementById("canvas_id")
+        ctx=canvas.getContext("2d")
+        color="black"
+        WidthOfLine=2
+        Width= screen.width
+        Height= screen.height
+        newWidthForCanvas= screen.width-100
+        newHeightForCanvas= screen.height-100
+        if (Width<992){
+            document.getElementById("canvas_id").width=newWidthForCanvas
+            document.getElementById("canvas_id").width=newHeightForCanvas
+            document.body.style.overflow="hidden"
+            canvas.addEventListener("touch_start",myTouchStart)
+        }
+        function myTouchStart(e){
+            console.log(myTouchStart)
+            color=document.getElementById("input_1").value
+       WidthOfLine=document.getElementById("input_width").value
+       Last_Position_Of_X=e.touches[0].clientX-canvas.offsetLeft
+       Last_Position_Of_Y=e.touches[0].clientY-canvas.offsetTop
+       
+        }
+        canvas.addEventListener("touchmove", MyTouchMove)
+        function MyTouchMove(e){
+       Current_Position_Of_Touch_X=e.touches[0].clientX-canvas.offsetLeft
+       Current_Position_Of_Touch_Y=e.touches[0].clientY-canvas.offsetTop
+       ctx.beginPath;
+       ctx.strokeStyle=color
+       ctx.LineWidth=WidthOfLine
+       console.log("last position of x and y coordinates")
+       console.log("x =="+Last_Position_Of_X+"y =="+Last_Position_Of_Y)
+       ctx.moveTo(Last_Position_Of_X,Last_Position_Of_Y)
+       console.log("current position of x and y coordinates")
+       console.log("x =="+Current_Position_Of_Touch_X+"y =="+Current_Position_Of_Touch_Y)
+       ctx.lineTo( Current_Position_Of_Touch_X,Current_Position_Of_Touch_Y)
+       ctx.stroke()
+      
+       Last_Position_Of_X=Current_Position_Of_Touch_X
+       Last_Position_Of_Y=Current_Position_Of_Touch_Y
+       }
+
+        canvas.addEventListener("mousedown", MyMouseDown)
+        function MyMouseDown(e){
+       color=document.getElementById("input_1").value
+       WidthOfLine=document.getElementById("input_width").value
+       MouseEvent="mousedown"
+        }
+        canvas.addEventListener("mousemove", MyMouseMove)
+        function MyMouseMove(e){
+       Current_Position_Of_Mouse_X=e.clientX-canvas.offsetLeft
+       Current_Position_Of_Mouse_Y=e.clientY-canvas.offsetTop
+       if  (MouseEvent == "mousedown"){
+       ctx.beginPath;
+       ctx.strokeStyle=color
+       ctx.LineWidth=WidthOfLine
+       console.log("last position of x and y coordinates")
+       console.log("x =="+Last_Position_Of_X+"y =="+Last_Position_Of_Y)
+       ctx.moveTo(Last_Position_Of_X,Last_Position_Of_Y)
+       console.log("current position of x and y coordinates")
+       console.log("x =="+Current_Position_Of_Mouse_X+"y =="+Current_Position_Of_Mouse_Y)
+       ctx.lineTo(Current_Position_Of_Mouse_X,Current_Position_Of_Mouse_Y)
+       ctx.stroke()
+       }
+       Last_Position_Of_X=Current_Position_Of_Mouse_X
+       Last_Position_Of_Y=Current_Position_Of_Mouse_Y
+       }
+       canvas.addEventListener("mouseup", My_Mouse_Up)
+       function My_Mouse_Up(e){
+           MouseEvent="mouseup"
+       }
+       canvas.addEventListener("mouseleave", My_Mouse_Leave)
+       function My_Mouse_Leave(e){
+           MouseEvent="mouseleave"
+       }
+       function ClearArea()
+        { ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); }
+        
+       </script>
+</body>
+
+
+</html>
